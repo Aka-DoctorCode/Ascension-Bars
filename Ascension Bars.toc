@@ -1,0 +1,8 @@
+## Interface: 100207
+## Title: Ascension Bars
+## Notes: Minimalist Experience and Reputation bars at the top of the screen.
+## Author: Frankmolcas - Aka-DoctorCode
+## Version: 1.0.0
+## SavedVariables: 
+## SavedVariablesPerCharacter: 
+AscensionBars.lua
