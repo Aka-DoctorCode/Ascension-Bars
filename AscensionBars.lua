@@ -1,5 +1,5 @@
 -----------------------------
--- frankmolcas XP & Rep Top Bars
+-- AscensionBars XP & Rep Top Bars
 -- WoW Addon to display a slim experience and reputation bar anchored to the top of the screen.
 -----------------------------
 
@@ -48,7 +48,35 @@ C_Timer.After(1, HideDefaultXPAndRepBars)
 -- === VARIABLES ===
 local _, playerClass = UnitClass("player")
 local classColor = RAID_CLASS_COLORS[playerClass]
-local wasMaxLevel = nil -- State tracking for layout updates
+local classColor = RAID_CLASS_COLORS[playerClass]
+local wasMaxLevel = nil
+
+-- === CUSTOM COLORS ===
+local CUSTOM_REP_COLORS = {
+    [1] = {r=0.8, g=0.133, b=0.133}, -- Hated #CC2222
+    [2] = {r=1.0, g=0.0, b=0.0},     -- Hostile #FF0000
+    [3] = {r=0.933, g=0.4, b=0.133}, -- Unfriendly #EE6622
+    [4] = {r=1.0, g=1.0, b=0.0},     -- Neutral #FFFF00
+    [5] = {r=0.0, g=1.0, b=0.0},     -- Friendly #00FF00
+    [6] = {r=0.0, g=1.0, b=0.533},   -- Honored #00FF88
+    [7] = {r=0.0, g=1.0, b=0.8},     -- Revered #00FFCC
+    [8] = {r=0.0, g=1.0, b=1.0},     -- Exalted #00FFFF
+    [9] = {r=0.858, g=0.733, b=0.008}, -- Paragon #dbbb02
+    [10] = {r=0.639, g=0.208, b=0.933}, -- Maxed #a335ee
+    [11] = {r=0.255, g=0.412, b=0.882}, -- Renown #4169E1 (Royal Blue)
+}
+
+local function GetGradientColor(percent)
+    local r1, g1, b1 = 0.8, 0.133, 0.133
+    local r2, g2, b2 = 0.858, 0.733, 0.008
+    percent = math.min(math.max(percent, 0), 1)
+    
+    return {
+        r = r1 + (r2 - r1) * percent,
+        g = g1 + (g2 - g1) * percent,
+        b = b1 + (b2 - b1) * percent
+    }
+end
 
 -- === HELPERS ===
 local coloredPipe = string.format("|cff%02x%02x%02x | |r",
@@ -85,9 +113,14 @@ local function FormatXP()
     return baseText
 end
 
-local function FormatRep(name, reaction, min, max, value, forcedLabel)
+local function FormatRep(name, reaction, min, max, value, forcedLabel, isMaxed)
     -- reaction is 1-8 (Hated to Exalted)
     local standingLabel = forcedLabel or (_G["FACTION_STANDING_LABEL"..reaction] or "??")
+    
+    if isMaxed then
+        return string.format("%s (%s)", name, standingLabel)
+    end
+
     local current = value - min
     local cap = max - min
     local percent = (cap > 0) and (current / cap * 100) or 0
@@ -150,7 +183,6 @@ paragonText:SetText("|cFF00FF00PARAGON REWARD PENDING!|r")
 paragonText:Hide()
 
 
--- === LAYOUT UPDATE ===
 -- === LAYOUT UPDATE ===
 local function UpdateLayout(isMaxLevel)
     -- Reset Points
@@ -231,6 +263,8 @@ local function UpdateDisplay()
     local name, reaction, min, max, value, factionID
     local standingLabel = nil
     local paragonRewardFound = false
+    local isFriendshipMaxed = false
+    local isFriendshipMaxed = false
     
     -- Function to check for ALL pending paragon rewards
     local function GetPendingParagonFactions()
@@ -313,7 +347,19 @@ local function UpdateDisplay()
                         min = 0
                         max = majorData.renownLevelThreshold
                         value = majorData.renownReputationEarned
-                        standingLabel = "Renown " .. majorData.renownLevel
+                        
+                        -- Get Max Renown Level if available
+                        local maxRenown = 0
+                        local levels = C_MajorFactions.GetRenownLevels(factionID)
+                        if levels then
+                            maxRenown = #levels
+                        end
+                        
+                        if maxRenown > 0 then
+                            standingLabel = string.format("Renown %d/%d", majorData.renownLevel, maxRenown)
+                        else
+                            standingLabel = "Renown " .. majorData.renownLevel
+                        end
                     end
                 -- Paragon Logic (Watched but no reward pending)
                 elseif factionID and C_Reputation.IsFactionParagon(factionID) then
@@ -337,6 +383,7 @@ local function UpdateDisplay()
                             min = 0
                             max = 1
                             value = 1
+                            isFriendshipMaxed = true
                         end
                     end
                 end
@@ -348,14 +395,69 @@ local function UpdateDisplay()
         repBar:Show()
         repTxFrame:Show()
         
-        -- Rep Color
-        local color = FACTION_BAR_COLORS[reaction]
-        if color then
-            repBar:SetStatusBarColor(color.r, color.g, color.b)
+        -- Apply Colors & Logic
+        -- We calculate logic first to potentially override min/max/value (e.g. for maxed bars)
+        local isPatternMaxed = false
+        
+        if paragonRewardFound or (factionID and C_Reputation.IsFactionParagon(factionID)) then
+            -- Paragon (Gold)
+            -- Values are already handled by Paragon logic upstream
+            local c = CUSTOM_REP_COLORS[9]
+            repBar:SetStatusBarColor(c.r, c.g, c.b)
+            
+        elseif C_Reputation.IsMajorFaction and C_Reputation.IsMajorFaction(factionID) then
+            -- Renown
+            local levels = C_MajorFactions.GetRenownLevels(factionID)
+            local maxRenown = (levels and #levels > 0) and #levels or 0
+            local majorData = C_MajorFactions.GetMajorFactionData(factionID)
+            local current = majorData and majorData.renownLevel or 0
+            
+            -- If current is max or higher, use Maxed Color (Purple) AND FORCE FULL BAR
+            if maxRenown > 0 and current >= maxRenown then
+                local c = CUSTOM_REP_COLORS[10]
+                repBar:SetStatusBarColor(c.r, c.g, c.b)
+                -- Force visual full bar (otherwise it might show 0/2500)
+                min = 0
+                max = 1
+                value = 1
+                isPatternMaxed = true
+                standingLabel = "Renown " .. current
+            else
+                -- Not maxed yet, use Royal Blue (Renown Progress)
+                local c = CUSTOM_REP_COLORS[11]
+                repBar:SetStatusBarColor(c.r, c.g, c.b)
+            end
+            
         else
-            repBar:SetStatusBarColor(0, 1, 0) -- Fallback
+            -- Classic / Friendship (Reaction Mapped)
+            
+            -- CHECK FOR EXALTED / MAXED (Non-Paragon)
+            local isClassicMaxed = false
+            if reaction == 8 then
+                if (max == 0) or (min == max) then
+                    isClassicMaxed = true
+                end
+            end
+            
+            if isClassicMaxed or isFriendshipMaxed then
+                local c = CUSTOM_REP_COLORS[10]
+                repBar:SetStatusBarColor(c.r, c.g, c.b)
+                -- Force visual full bar
+                min = 0
+                max = 1
+                value = 1
+                isPatternMaxed = true
+            else
+                local c = CUSTOM_REP_COLORS[reaction]
+                if c then
+                    repBar:SetStatusBarColor(c.r, c.g, c.b)
+                else
+                    repBar:SetStatusBarColor(0.5, 0.5, 0.5) -- Fallback
+                end
+            end
         end
         
+        -- Apply Values to Bar (AFTER logic adjustments)
         repBar:SetMinMaxValues(min, max)
         repBar:SetValue(value)
         
@@ -368,8 +470,7 @@ local function UpdateDisplay()
         repSpark:SetPoint("CENTER", repBar, "LEFT", barWidth2 * pct2, 0)
         
         -- Rep Text
-        -- Rep Text
-        repText:SetText("|cFFFFFFFF" .. FormatRep(name, reaction, min, max, value, standingLabel) .. "|r")
+        repText:SetText("|cFFFFFFFF" .. FormatRep(name, reaction, min, max, value, standingLabel, isPatternMaxed) .. "|r")
         repTxFrame:SetWidth(repText:GetStringWidth() + 2)
         
     else
@@ -414,13 +515,15 @@ end
 
 -- Create update frame
 local f = CreateFrame("Frame")
-f:SetScript("OnUpdate", function(self, elapsed)
-    self.timer = (self.timer or 0) + elapsed
-    if self.timer >= 1 then -- Using 1s interval as set previously
-        UpdateDisplay()
-        self.timer = 0
-    end
-end)
+f:RegisterEvent("PLAYER_ENTERING_WORLD")
+f:RegisterEvent("PLAYER_XP_UPDATE")
+f:RegisterEvent("UPDATE_EXHAUSTION")
+f:RegisterEvent("PLAYER_LEVEL_UP")
+f:RegisterEvent("UPDATE_FACTION")
+f:RegisterEvent("MAJOR_FACTION_RENOWN_LEVEL_CHANGED")
+f:RegisterEvent("MAJOR_FACTION_UNLOCKED")
+
+f:SetScript("OnEvent", UpdateDisplay)
 
 -- Initial update
 UpdateDisplay()
