@@ -276,8 +276,10 @@ local function UpdateDisplay()
             local factionData = C_Reputation.GetFactionDataByIndex(i)
             if factionData and factionData.factionID then
                 if C_Reputation.IsFactionParagon(factionData.factionID) then
-                    local _, _, _, hasRewardPending = C_Reputation.GetFactionParagonInfo(factionData.factionID)
-                    if hasRewardPending then
+                    local currentValue, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(factionData.factionID)
+                    -- A reward is truly pending only if BOTH hasRewardPending is true AND there's a valid quest ID
+                    -- The quest ID is the definitive indicator that a reward is ready to be claimed
+                    if hasRewardPending and rewardQuestID and rewardQuestID > 0 then
                         table.insert(pending, {name = factionData.name, id = factionData.factionID})
                     end
                 end
