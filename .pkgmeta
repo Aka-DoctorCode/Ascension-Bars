@@ -1,0 +1,8 @@
+package-as: AscensionBars
+ignore:
+    - .git
+    - .gitignore
+    - .vscode
+    - __MACOSX
+    - .DS_Store
+    - LanacanXPBar

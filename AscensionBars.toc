@@ -1,5 +1,5 @@
-## Interface: 110002
-## Title: Ascension Bars
+## Interface: 120000
+## Title: AscensionBars
 ## Notes: Minimalist Experience and Reputation bars at the top of the screen.
 ## Author: Frankmolcas - Aka-DoctorCode
 ## Version: 2.0
