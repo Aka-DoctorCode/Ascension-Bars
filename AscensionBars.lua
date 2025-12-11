@@ -145,8 +145,8 @@ textHolder:SetHeight(15)
 
 -- Paragon Reward Text
 local paragonText = textHolder:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-paragonText:SetFont("Fonts\\FRIZQT__.TTF", 18, "OUTLINE, THICK")
-paragonText:SetPoint("TOP", textHolder, "BOTTOM", 0, -30)
+paragonText:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE, THICK")
+paragonText:SetPoint("TOP", textHolder, "BOTTOM", 0, -17)
 paragonText:SetText("|cFF00FF00PARAGON REWARD PENDING!|r")
 paragonText:Hide()
 
