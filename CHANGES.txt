@@ -1,0 +1,147 @@
+Aquí tienes la traducción al inglés de los cambios:
+
+# AscensionBars Changelog - v2.0.1 to v3.0.0
+
+## ✨ **New Features**
+
+### 🎨 **Integrated Configuration Panel**
+- **Native in-game configuration interface**
+- **Preview mode** for adjusting visual options in real-time
+- **Automatic saving** of all preferences between sessions
+- **Intuitive controls** with sliders, buttons, and color pickers
+
+### 🎯 **Total Customization**
+- **Individually adjustable height** for each bar
+- **Free vertical positioning** across the entire screen
+- **Two display modes**:
+  - Always visible
+  - Mouseover only
+  - Automatically hide during combat
+- **Full color palette** with transparency:
+  - Choice between class color or custom color for experience
+  - Reputation reaction colors or a uniform tone
+  - Independent text color
+  - Rest overlay with customizable color
+- **Improvements to reward text**:
+  - Fixed position at the top or dynamic
+  - List in separate lines or combined text
+  - Full control over size and spacing
+
+## ⚡ **Performance Optimization**
+- **Smart scanning** that avoids repetitive queries
+- **Cache memory** for faction information
+- **More efficient updates** only when necessary
+- **Reduced load** in areas with many factions
+
+## 🐛 **Important Bug Fixes**
+- **Visual issue** upon reaching maximum level fixed
+- **Correct behavior** during combat and exit
+- **Immediate detection** of available rewards after quests
+- **Stable positioning** in all situations
+- **Consistent transparency** according to established rules
+
+## 🔄 **Quality of Life Improvements**
+- **Instant visual feedback** when changing options
+- **Clear representation of rest** as an overlay bar
+- **Informational text** for multiple pending rewards
+- **Improved visual distinction** between reputation types
+- **More polished** and professional interface
+
+## 📊 **Improved Saving System**
+- **New format** for configuration storage
+- **Smart default values** for new options
+- **Support for transparency** in all colors
+- **Guaranteed persistence** between game restarts
+
+## 🚀 **Visual Refinements**
+- **Unified typography** for consistency
+- **Enhanced glow effects** on progress bars
+- **Dynamic alignment** of text elements
+- **Smooth transitions** upon showing/hiding
+- **Automatic adaptation** to configuration changes
+
+## 🔧 **Expanded Support**
+- **Maintained compatibility** with previous World of Warcraft versions
+- **Improved recognition** of modern reputation systems
+- **Proper handling** of special relationships and repeatable rewards
+- **Seamless integration** with the in-game options system
+
+## 📝 **Notes for the Update**
+1. **Previous settings will not transfer** due to the new system
+2. **It is recommended to visit the options** to customize according to preferences
+3. **The preview mode** helps to understand each setting visually
+4. **Overall performance should improve**, especially in the end-game
+
+----
+
+# AscensionBars Changelog - v2.0.1 a v3.0.0
+
+## ✨ **Nuevas Características**
+
+### 🎨 **Panel de Configuración Integrado**
+- **Interfaz de configuración nativa** dentro del juego
+- **Modo de vista previa** para ajustar opciones visuales en tiempo real
+- **Guardado automático** de todas las preferencias entre sesiones
+- **Controles intuitivos** con deslizadores, botones y selectores de color
+
+### 🎯 **Personalización Total**
+- **Altura ajustable individual** para cada barra
+- **Posicionamiento vertical libre** en toda la pantalla
+- **Dos modos de visualización**:
+  - Visible siempre
+  - Solo al pasar el ratón por encima
+  - Ocultar automáticamente durante combate
+- **Paleta de colores completa** con transparencia:
+  - Elección entre color de clase o personalizado para experiencia
+  - Colores de reacción de reputación o tono uniforme
+  - Color del texto independiente
+  - Superposición de descanso con color personalizable
+- **Mejoras en texto de recompensas**:
+  - Posición fija en la parte superior o dinámica
+  - Lista en líneas separadas o texto combinado
+  - Control total sobre tamaño y espaciado
+
+## ⚡ **Optimización de Rendimiento**
+- **Escaneo inteligente** que evita consultas repetitivas
+- **Memoria caché** para información de facciones
+- **Actualizaciones más eficientes** solo cuando es necesario
+- **Reducción de carga** en zonas con muchas facciones
+
+## 🐛 **Correcciones Importantes**
+- **Problema visual** al alcanzar nivel máximo corregido
+- **Comportamiento correcto** durante combate y salida
+- **Detección inmediata** de recompensas disponibles después de misiones
+- **Posicionamiento estable** en todas las situaciones
+- **Transparencia consistente** según reglas establecidas
+
+## 🔄 **Mejoras de Jugabilidad**
+- **Retroalimentación visual instantánea** al cambiar opciones
+- **Representación clara del descanso** como barra superpuesta
+- **Texto informativo** para múltiples recompensas pendientes
+- **Distinción visual mejorada** entre tipos de reputación
+- **Interfaz más pulida** y profesional
+
+## 📊 **Sistema de Guardado Mejorado**
+- **Nuevo formato** de almacenamiento de configuraciones
+- **Valores por defecto inteligentes** para nuevas opciones
+- **Soporte para transparencias** en todos los colores
+- **Persistencia garantizada** entre reinicios del juego
+
+## 🚀 **Refinamientos Visuales**
+- **Tipografía unificada** para consistencia
+- **Efectos de brillo mejorados** en barras de progreso
+- **Alineación dinámica** de elementos de texto
+- **Transiciones suaves** al mostrar/ocultar
+- **Adaptación automática** a cambios de configuración
+
+## 🔧 **Soporte Ampliado**
+- **Compatibilidad mantenida** con versiones anteriores de World of Warcraft
+- **Reconocimiento mejorado** de sistemas de reputación modernos
+- **Manejo adecuado** de relaciones especiales y recompensas repetibles
+- **Integración perfecta** con el sistema de opciones del juego
+
+## 📝 **Notas para la Actualización**
+1. **La configuración anterior no se transferirá** debido al nuevo sistema
+2. **Se recomienda visitar las opciones** para personalizar según preferencias
+3. **El modo de vista previa** ayuda a entender cada ajuste visualmente
+4. **El rendimiento general debería mejorar**, especialmente en end-game

@@ -2,7 +2,7 @@
 ## Title: AscensionBars
 ## Notes: Minimalist Experience and Reputation bars at the top of the screen.
 ## Author: AkaDoctorCode
-## Version: 2.0.1
-## SavedVariables: 
-## SavedVariablesPerCharacter: 
+## Version: 3.0.0
+## SavedVariables: AscensionBarsDB
+
 AscensionBars.lua
