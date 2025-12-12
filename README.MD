@@ -2,7 +2,6 @@
 
 ![Version](https://img.shields.io/badge/Version-3.0.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![WoW Version](https://img.shields.io/badge/WoW-11.2.7_-_12.0-purple)
 ![Customizable](https://img.shields.io/badge/Customizable-Yes-orange)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
