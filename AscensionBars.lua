@@ -1,4 +1,7 @@
+-- ==========================================================
 -- 1. CONFIGURACIÓN Y VALORES POR DEFECTO
+-- ==========================================================
+
 local ADDON_NAME = "AscensionBars"
 -- Valores iniciales
 local DEFAULTS = {
@@ -221,7 +224,7 @@ local function InitOptionsPanel()
     local SEPARATOR_WIDTH = 360
 
     -- ==========================================================
-    -- 1. GLOBAL SETTINGS (Layout & Visibility)
+    -- 2. GLOBAL SETTINGS (Layout & Visibility)
     -- ==========================================================
     local headGen = content:CreateFontString(nil, "ARTWORK", "GameFontHighlightMedium")
     headGen:SetPoint("TOPLEFT", content, "TOPLEFT", MARGIN_LEFT, MARGIN_TOP)
@@ -264,7 +267,7 @@ local function InitOptionsPanel()
     line1:SetPoint("TOPLEFT", chkConfig, "BOTTOMLEFT", 4, SECTION_SPACING)
 
     -- ==========================================================
-    -- 2. EXPERIENCE BAR
+    -- 3. EXPERIENCE BAR
     -- ==========================================================
     local headXP = content:CreateFontString(nil, "ARTWORK", "GameFontHighlightMedium")
     headXP:SetPoint("TOPLEFT", line1, "BOTTOMLEFT", -4, SECTION_SPACING)
@@ -299,7 +302,7 @@ local function InitOptionsPanel()
     line2:SetPoint("TOPLEFT", chkShowRested, "BOTTOMLEFT", 4, SECTION_SPACING)
 
     -- ==========================================================
-    -- 3. REPUTATION BAR
+    -- 4. REPUTATION BAR
     -- ==========================================================
     local headRep = content:CreateFontString(nil, "ARTWORK", "GameFontHighlightMedium")
     headRep:SetPoint("TOPLEFT", line2, "BOTTOMLEFT", -4, SECTION_SPACING)
@@ -349,7 +352,7 @@ local function InitOptionsPanel()
     line3:SetPoint("TOPLEFT", lastLeft, "BOTTOMLEFT", -6, SECTION_SPACING)
 
     -- ==========================================================
-    -- 4. PARAGON NOTIFICATION
+    -- 5. PARAGON NOTIFICATION
     -- ==========================================================
     local headPara = content:CreateFontString(nil, "ARTWORK", "GameFontHighlightMedium")
     headPara:SetPoint("TOPLEFT", line3, "BOTTOMLEFT", -4, SECTION_SPACING)
@@ -411,6 +414,7 @@ local function InitOptionsPanel()
     OptionsPanel:HookScript("OnShow", function()
         chkConfig:SetChecked(state.isConfigMode)
         if db then
+            -- CHECKBOXES
             chkClassColor:SetChecked(db.useClassColorXP)
             chkReactColor:SetChecked(db.useReactionColorRep)
             chkParaTop:SetChecked(db.paragonOnTop)
@@ -418,7 +422,37 @@ local function InitOptionsPanel()
             chkMouseover:SetChecked(db.showOnMouseover)
             chkCombat:SetChecked(db.hideInCombat)
             chkShowRested:SetChecked(db.showRestedBar)
-            if db.textSize then _G["AscensionSliderTextSize"]:SetValue(db.textSize) end 
+            
+            -- SLIDERS (Force update to sync UI state)
+            if db.yOffset then sliderY:SetValue(db.yOffset) end
+            if db.textSize then sliderTextSize:SetValue(db.textSize) end
+            if db.barHeightXP then sliderXP:SetValue(db.barHeightXP) end
+            if db.barHeightRep then sliderRep:SetValue(db.barHeightRep) end
+            if db.paragonTextSize then sliderParaSize:SetValue(db.paragonTextSize) end
+            if db.paragonTextGap then sliderTextGap:SetValue(db.paragonTextGap) end
+            if db.paragonTextYOffset then sliderParaY:SetValue(db.paragonTextYOffset) end
+
+            -- Helper to update color pickers
+            local function UpdateColorSwatch(frame, colorEntry)
+                if frame and frame.swatch and colorEntry then
+                    frame.swatch:SetColorTexture(colorEntry.r, colorEntry.g, colorEntry.b, colorEntry.a or 1.0)
+                end
+            end
+
+            -- COLOR PICKERS
+            UpdateColorSwatch(cpText, db.textColor)
+            UpdateColorSwatch(cpXP, db.xpBarColor)
+            UpdateColorSwatch(cpRested, db.restedBarColor)
+            UpdateColorSwatch(cpRep, db.repBarColor)
+            UpdateColorSwatch(cpParaText, db.paragonPendingColor)
+            
+            -- Faction Colors
+            for i=1, 11 do
+                local cp = _G["AscensionCPRep"..i]
+                if cp and db.repColors and db.repColors[i] then
+                    UpdateColorSwatch(cp, db.repColors[i])
+                end
+            end
         end
         
         -- Use timer to ensure geometry is calculated
