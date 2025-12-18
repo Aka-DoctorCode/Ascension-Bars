@@ -2,7 +2,16 @@
 ## Title: AscensionBars
 ## Notes: Minimalist Experience and Reputation bars at the top of the screen.
 ## Author: AkaDoctorCode
-## Version: 3.6.0
+## Version: 4.0.0-Ace3
 ## SavedVariables: AscensionBarsDB
+
+# Librerías Ace3 (Asegúrate de que estas rutas existan en tu carpeta Libs)
+Libs\LibStub\LibStub.lua
+Libs\AceAddon-3.0\AceAddon-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
+Libs\AceDB-3.0\AceDB-3.0.xml
+Libs\AceConsole-3.0\AceConsole-3.0.xml
+Libs\AceGUI-3.0\AceGUI-3.0.xml
+Libs\AceConfig-3.0\AceConfig-3.0.xml
 
 AscensionBars.lua
