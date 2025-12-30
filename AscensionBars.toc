@@ -1,12 +1,11 @@
-## Interface: 112007
+## Interface: 120000
 ## Title: AscensionBars
-## Notes: Minimalist Experience and Reputation bars.
+## Notes: Minimalist Experience and Reputation bars with advanced customization.
 ## Author: AkaDoctorCode
-## Version: 4.1.1
+## Version: 5.0.0
 ## SavedVariables: AscensionBarsDB
 
 # Librerías (Embeds)
-# Asegúrate de tener estas carpetas en tu addon o usar un gestor de librerías
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 Libs\AceAddon-3.0\AceAddon-3.0.xml
