@@ -18,7 +18,7 @@ local defaults = {
         yOffset = -2,
         paragonTextSize = 14,
         paragonTextYOffset = -100,
-        paragonOnTop = true,
+        paragonOnTop = false,
         splitParagonText = false,
         paragonTextGap = 5,
         paragonPendingColor = { r = 0, g = 1, b = 0, a = 1.0 },
@@ -44,7 +44,6 @@ local defaults = {
             [10] = { r = 0.639, g = 0.208, b = 0.933, a = 0.70 },
             [11] = { r = 0.255, g = 0.412, b = 0.882, a = 0.70 },
         },
-        -- New advanced options
         showPercentage = true,
         showAbsoluteValues = true,
         fontOutline = "OUTLINE",
@@ -62,7 +61,7 @@ local defaults = {
 local CONSTANTS = {
     TEXTURE_BAR = "Interface\\Buttons\\WHITE8X8",
     TEXTURE_SPARK = "Interface\\CastingBar\\UI-CastingBar-Spark",
-    UPDATE_THROTTLE = 0.1, -- 100ms
+    UPDATE_THROTTLE = 1,
     DEFAULT_GAP = 30,
     MIN_TEXT_WIDTH = 100,
     ANCHOR_POINTS = {
