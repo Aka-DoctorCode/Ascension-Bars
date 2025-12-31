@@ -1,3 +1,5 @@
+-- Happy new year everyone!
+-- Please leave feedback to improve the add on
 -- ==========================================================
 -- AscensionBars - Version 5.0.0
 -- ==========================================================
