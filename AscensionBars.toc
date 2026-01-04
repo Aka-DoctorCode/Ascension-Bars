@@ -2,7 +2,7 @@
 ## Title: AscensionBars
 ## Notes: Minimalist Experience and Reputation bars with advanced customization.
 ## Author: AkaDoctorCode
-## Version: 5.0.3
+## Version: 5.0.4
 ## SavedVariables: AscensionBarsDB
 
 # Librerías (Embeds)

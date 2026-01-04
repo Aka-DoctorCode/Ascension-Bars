@@ -1,5 +1,5 @@
 package-as: AscensionBars
-enable-nolib-creation: no
+
 ignore:
     - .git
     - .gitignore
